@@ -1,2 +1,3 @@
-# TIKA-SERVICE
-TIKA WITH TESSERECT OCR SERVICE
+# text-extraction service
+text-extraction service implementation 
+
