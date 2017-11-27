@@ -50,7 +50,7 @@ public class ImageExtractor implements Extractor {
         config.setOutputType(outputType);
         //config.setTesseractPath("C:\\Program Files (x86)\\Tesseract-OCR");
          //config.setTesseractPath("/usr/local/share/tessdata");
-        config.setEnableImageProcessing(1);
+        //config.setEnableImageProcessing(1);
         //config.setPreserveInterwordSpacing(true);
        
         //config.setLanguage("eng");
