@@ -58,7 +58,7 @@ RUN tar xvzf ImageMagick.tar.gz
 
 RUN ls
 
-RUN cd ImageMagick-7.0.7-11 && ./configure && make && make install && ldconfig /usr/local/lib 
+RUN cd ImageMagick-7.0.7-19 && ./configure && make && make install && ldconfig /usr/local/lib 
 
 RUN apt-get -qq -y install python-numpy
 
@@ -66,7 +66,7 @@ VOLUME /tmp
 
 EXPOSE 9099
 
-ADD build/libs/ocr-tika-service-dev.jar app.jar
+ADD build/libs/TIKA-SERVICE.jar app.jar
 
 RUN bash -c 'touch /app.jar'
 
