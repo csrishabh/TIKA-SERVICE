@@ -1,3 +1,3 @@
 # text-extraction service
-text-extraction service implementation 
+text-extraction and Searchable PDF service implementation 
 
