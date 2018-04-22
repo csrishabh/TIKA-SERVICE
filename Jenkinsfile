@@ -15,7 +15,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("maliksaurabh/oct-tika")
+        app = docker.build("saurabhmalik/ocr-tika")
     }
 
     stage('Test image') {
