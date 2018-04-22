@@ -1,5 +1,5 @@
 FROM java:8
-
+RUN ls
 RUN apt-get -qq update &&  apt-get -qq -y install build-essential
 
 RUN apt-get install g++ # or clang++ (presumably)
