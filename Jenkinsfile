@@ -1,9 +1,5 @@
 node {
     def app
-    // Create an Artifactory Gradle instance.
-    def rtGradle = Artifactory.newGradleBuild()
-    def buildInfo
-
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
 
