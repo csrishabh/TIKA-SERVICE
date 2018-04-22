@@ -58,7 +58,7 @@ RUN tar xvzf ImageMagick.tar.gz
 
 RUN ls
 
-RUN cd ImageMagick-7.0.7-19 && ./configure && make && make install && ldconfig /usr/local/lib 
+RUN cd ImageMagick-7.0.7-28 && ./configure && make && make install && ldconfig /usr/local/lib 
 
 RUN apt-get -qq -y install python-numpy
 
