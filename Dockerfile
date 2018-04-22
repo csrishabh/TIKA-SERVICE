@@ -65,7 +65,6 @@ RUN apt-get -qq -y install python-numpy
 VOLUME /tmp
 
 EXPOSE 9099
-RUN cd build/libs
 RUN ls
 ADD build/libs/TIKA-SERVICE.jar app.jar
 
