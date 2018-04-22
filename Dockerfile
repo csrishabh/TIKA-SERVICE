@@ -66,7 +66,7 @@ VOLUME /tmp
 
 EXPOSE 9099
 
-ADD build/libs/ocr-tika.jar app.jar
+ADD build/libs/TIKA-SERVICE.jar app.jar
 
 RUN bash -c 'touch /app.jar'
 
