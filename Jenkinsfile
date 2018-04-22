@@ -1,10 +1,17 @@
 node {
     def app
+    // Create an Artifactory Gradle instance.
+    def rtGradle = Artifactory.newGradleBuild()
+    def buildInfo
 
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
 
         git branch: "master", url: "https://github.com/csrishabh/TIKA-SERVICE.git"
+    }
+    
+    stage('Gradle Build'){
+        sh "./gradlew clean build"
     }
 
     stage('Build image') {
