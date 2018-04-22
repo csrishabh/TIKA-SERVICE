@@ -8,7 +8,7 @@ node {
     
     stage('Gradle Build'){
         sh "./gradlew clean build"
-        sh "ls"
+        sh "ls build/libs"
     }
 
     stage('Build image') {
