@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ocr-service-production
+  name: ocr-service-production
+spec:
+  ports:
+  - name: 80-80
+    port: 9099  
+    protocol: TCP
+    targetPort: 9099
+  selector:
+    load-balancer-ocr-service-production: "true"
+  sessionAffinity: None
+  type: LoadBalancer

@@ -1,0 +1,286 @@
+{
+  "name": "Deploy",
+  "application": "ocrcd",
+  "appConfig": {},
+  "executionEngine": "v2",
+  "keepWaitingPipelines": true,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": true,
+  "parallel": true,
+  "parameterConfig": [],
+  "stages": [
+    {
+      "clusters": [
+        {
+          "account": "local",
+          "application": "ocrcd",
+          "cloudProvider": "kubernetes",
+          "containers": [
+            {
+              "args": [],
+              "command": [],
+              "envVars": [
+                {
+                  "name": "COMPONENT",
+                  "value": "ocr-service"
+                },
+                {
+                  "name": "VERSION",
+                  "value": "${trigger['tag']}"
+                }
+              ],
+              "imageDescription": {
+                "account": "dockerhub",
+                "fromTrigger": true,
+                "imageId": "index.docker.io/saurabhmalik/ocr-tika:latest",
+                "registry": "index.docker.io",
+                "repository": "saurabhmalik/ocr-tika",
+                "tag": "latest"
+              },
+              "imagePullPolicy": "ALWAYS",
+              "limits": {
+                "cpu": null,
+                "memory": null
+              },
+              "livenessProbe": null,
+              "name": "PROJECT-ocr-service",
+              "ports": [
+                {
+                  "containerPort": 9099,
+                  "hostIp": null,
+                  "hostPort": null,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "readinessProbe": null,
+              "requests": {
+                "cpu": null,
+                "memory": null
+              },
+              "volumeMounts": []
+            }
+          ],
+          "deployment": {
+            "deploymentStrategy": {
+              "rollingUpdate": {
+                "maxSurge": "100%",
+                "maxUnavailable": "0%"
+              },
+              "type": "RollingUpdate"
+            },
+            "enabled": true,
+            "minReadySeconds": 0,
+            "paused": false,
+            "progressRollbackSeconds": null,
+            "revisionHistoryLimit": 2,
+            "rollbackRevision": null
+          },
+          "events": [],
+          "freeFormDetails": "canary",
+          "hostNetwork": null,
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "loadBalancers": [
+            "ocr-service-canary",
+            "ocr-service-production"
+          ],
+          "namespace": "default",
+          "nodeSelector": {},
+          "podAnnotations": {},
+          "provider": "kubernetes",
+          "region": "default",
+          "replicaSetAnnotations": {
+            "deployment.kubernetes.io/desired-replicas": "2",
+            "deployment.kubernetes.io/max-replicas": "6",
+            "deployment.kubernetes.io/revision": "40",
+            "deployment.kubernetes.io/revision-history": "12"
+          },
+          "restartPolicy": null,
+          "securityContext": null,
+          "securityGroups": [],
+          "sequence": null,
+          "stack": "ocrservice",
+          "strategy": "",
+          "targetSize": 1,
+          "terminationGracePeriodSeconds": 30,
+          "volumeSources": []
+        }
+      ],
+      "name": "Deploy OCR Canary",
+      "refId": "2",
+      "requisiteStageRefIds": [],
+      "type": "deploy"
+    },
+    {
+      "account": "local",
+      "annotations": {},
+      "application": "ocrcd",
+      "cloudProvider": "kubernetes",
+      "cloudProviderType": "kubernetes",
+      "container": {
+        "args": [],
+        "command": [
+          "curl",
+          "http://ocr-service-canary:9099/swagger-ui.html"
+        ],
+        "envVars": [],
+        "imageDescription": {
+          "account": "dockerhub",
+          "fromTrigger": true,
+          "organization": "saurabhmalik",
+          "registry": "index.docker.io",
+          "repository": "saurabhmalik/ocr-tika",
+          "tag": "latest"
+        },
+        "name": "1494826281215",
+        "volumeMounts": []
+      },
+      "credentials": "local",
+      "labels": {},
+      "name": "OCR Integration Tests",
+      "namespace": "default",
+      "refId": "8",
+      "requisiteStageRefIds": [
+        "2"
+      ],
+      "type": "runJob",
+      "volumeSources": []
+    },
+    {
+      "failPipeline": true,
+      "instructions": "Do you want to deploy this image to production?",
+      "judgmentInputs": [],
+      "name": "Push to Production?",
+      "notifications": [],
+      "refId": "11",
+      "requisiteStageRefIds": [
+        "8"
+      ],
+      "type": "manualJudgment"
+    },
+    {
+      "clusters": [
+        {
+          "account": "local",
+          "application": "ocrcd",
+          "cloudProvider": "kubernetes",
+          "containers": [
+            {
+              "args": [],
+              "command": [],
+              "envVars": [
+                {
+                  "envSource": null,
+                  "name": "COMPONENT",
+                  "value": "ocr-service"
+                },
+                {
+                  "envSource": null,
+                  "name": "VERSION",
+                  "value": "${ trigger['tag'] }"
+                }
+              ],
+              "imageDescription": {
+                "account": "dockerhub",
+                "fromTrigger": true,
+                "imageId": "index.docker.io/saurabhmalik/ocr-tika:latest",
+                "registry": "index.docker.io",
+                "repository": "saurabhmalik/ocr-tika",
+                "tag": "latest"
+              },
+              "imagePullPolicy": "ALWAYS",
+              "lifecycle": null,
+              "limits": null,
+              "livenessProbe": null,
+              "name": "PROJECT-ocr-service",
+              "ports": [
+                {
+                  "containerPort": 9099,
+                  "hostIp": null,
+                  "hostPort": null,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "readinessProbe": null,
+              "requests": null,
+              "securityContext": null,
+              "volumeMounts": []
+            }
+          ],
+          "deployment": {
+            "deploymentStrategy": {
+              "rollingUpdate": {
+                "maxSurge": "100%",
+                "maxUnavailable": "0%"
+              },
+              "type": "RollingUpdate"
+            },
+            "enabled": true,
+            "minReadySeconds": 0,
+            "paused": false,
+            "progressRollbackSeconds": null,
+            "revisionHistoryLimit": 2,
+            "rollbackRevision": null
+          },
+          "events": [],
+          "freeFormDetails": "prod",
+          "hostNetwork": null,
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "loadBalancers": [
+            "ocr-service-production"
+          ],
+          "namespace": "default",
+          "nodeSelector": {},
+          "podAnnotations": {},
+          "provider": "kubernetes",
+          "region": "default",
+          "replicaSetAnnotations": {
+            "deployment.kubernetes.io/desired-replicas": "2",
+            "deployment.kubernetes.io/max-replicas": "6",
+            "deployment.kubernetes.io/revision": "43",
+            "deployment.kubernetes.io/revision-history": "12"
+          },
+          "restartPolicy": null,
+          "securityContext": null,
+          "securityGroups": [],
+          "sequence": null,
+          "stack": "ocrservice",
+          "strategy": "",
+          "targetSize": 8,
+          "terminationGracePeriodSeconds": 30,
+          "volumeSources": []
+        }
+      ],
+      "name": "Deploy OCR Prod",
+      "refId": "13",
+      "requisiteStageRefIds": [
+        "11"
+      ],
+      "type": "deploy"
+    }
+  ],
+  "triggers": [
+    {
+      "account": "dockerhub",
+      "application": "ocrcd",
+      "enabled": true,
+      "organization": "saurabhmalik",
+      "pipeline": "61372c70-62af-422f-9565-e1975a758612",
+      "registry": "index.docker.io",
+      "repository": "saurabhmalik/ocr-tika",
+      "status": [
+        "successful"
+      ],
+      "tag": "latest",
+      "type": "docker"
+    }
+  ],
+  "updateTs": "1500322920670"
+}
