@@ -69,7 +69,7 @@ RUN ls
 RUN ls home
 RUN ls tmp
 RUN ls bin
-ADD build/libs/ocr-integration-pipeline.jar app.jar
+ADD build/libs/ocr-tika.jar app.jar
 
 RUN bash -c 'touch /app.jar'
 
